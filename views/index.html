@@ -1,0 +1,30 @@
+
+<button onclick="downloadVideo()">Download Video</button>
+
+<script>
+async function downloadVideo() {
+  const response = await fetch('/download-video', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      url: 'https://skystudio.com/video.mp4',
+      resolution: '1080',
+      orientation: 'horizontal'
+    })
+  });
+  
+  if (response.ok) {
+    const blob = await response.blob();
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'video.mp4';
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+  } else {
+    console.error('Failed to download video');
+  }
+}
+</script>
+
