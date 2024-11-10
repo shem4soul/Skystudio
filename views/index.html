@@ -1,30 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Download Video</title>
+</head>
+<body>
+  <h1>Download Video</h1>
+  <button onclick="downloadVideo('Skidesign.mp4', '1080p')">Download in 1080p</button>
+  <button onclick="downloadVideo('Skidesign.mp4', '720p')">Download in 720p</button>
 
-<button onclick="downloadVideo()">Download Video</button>
-
-<script>
-async function downloadVideo() {
-  const response = await fetch('/download-video', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      url: 'https://skystudio.com/video.mp4',
-      resolution: '1080',
-      orientation: 'horizontal'
-    })
-  });
-  
-  if (response.ok) {
-    const blob = await response.blob();
-    const url = window.URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = 'video.mp4';
-    document.body.appendChild(a);
-    a.click();
-    a.remove();
-  } else {
-    console.error('Failed to download video');
-  }
-}
-</script>
-
+  <script>
+    function downloadVideo(file, resolution) {
+      const url = `/api/video/download?file=${file}&resolution=${resolution}`
+      window.location.href = url
+    }
+  </script>
+</body>
+</html>

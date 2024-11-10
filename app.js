@@ -1,7 +1,7 @@
 
 const express = require('express')
 const mongoose = require('mongoose')
-
+const path = require("path")
 const app = express()
 const dotenv = require('dotenv')
 const videoRoutes = require('./routes/videoRoutes')
@@ -22,9 +22,17 @@ mongoose
   .then(() => console.log("MONGODB CONNECTED!"))
   .catch((error) => console.error("MongoDB connection error:", error))
 
-app.use('/api', videoRoutes)
+
+
+  // Serve static files from "views" directory
+app.use(express.static(path.join(__dirname, "views")))
+
+
+// Use video routes
+app.use("/api/video", videoRoutes)
 
 app.listen(5000, () => {
-  console.log('Server is running on port 5000')
+  console.log('Server is running on on http://localhost:${PORT}')
 })
+
 

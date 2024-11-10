@@ -1,4 +1,4 @@
-
+/*
 const ffmpeg = require('fluent-ffmpeg')
 const path = require('path')
 
@@ -25,3 +25,4 @@ class VideoService {
 }
 
 module.exports = VideoService
+*/
