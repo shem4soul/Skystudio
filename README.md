@@ -1,0 +1,1 @@
+Our platform allows users to download videos in high resolution, with options for 1080p and 720p. The video processing is powered by FFMPEG, ensuring that the videos are scaled properly to the requested resolution while maintaining their quality.
