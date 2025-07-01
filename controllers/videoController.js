@@ -5,11 +5,11 @@ const fs = require("fs")
 
 ffmpeg.setFfmpegPath(ffmpegStatic)
 
-// Function to handle video download
+
 const downloadVideo = async (req, res) => {
-  const videoFile = req.query.file // Video filename passed as a query parameter
-  const resolution = req.query.resolution || "1080p" // Default resolution
-  const outputFormat = "mp4" // You can change based on requirements
+  const videoFile = req.query.file 
+  const resolution = req.query.resolution || "1080p" 
+  const outputFormat = "mp4" 
 
   if (!videoFile) {
     return res.status(400).send("Video file not specified.")
@@ -27,23 +27,23 @@ const downloadVideo = async (req, res) => {
   ffmpeg(inputPath)
     .outputOptions([
       "-vf", // Video filter options
-      `scale=-2:${resolution === "1080p" ? 1080 : 720}`, // Dynamic resolution based on user input
-      "-c:v", "libx264", // Encoding with x264 codec
-      "-preset", "fast", // Encoding speed (adjust as needed)
-      "-movflags", "faststart", // Fast start for MP4 files
+      `scale=-2:${resolution === "1080p" ? 1080 : 720}`,
+      "-c:v", "libx264", 
+      "-preset", "fast", 
+      "-movflags", "faststart", 
     ])
     .on("end", () => {
       console.log("Processing finished successfully")
       res.download(outputPath, (err) => {
         if (err) console.error("Download error:", err)
-        fs.unlinkSync(outputPath); // Clean up temp file after download
+        fs.unlinkSync(outputPath);
       })
     })
     .on("error", (err) => {
       console.error("Error processing video:", err)
       res.status(500).send("Error processing video")
     })
-    .save(outputPath); // Output file
+    .save(outputPath); 
 }
 
 module.exports = { downloadVideo }
